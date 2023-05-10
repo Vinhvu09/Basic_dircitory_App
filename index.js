@@ -2,36 +2,30 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 dotenv.config();
 
 const connectDatabase = require("./src/configs/db.config");
+const todoRoute = require("./src/routes/todo.routes");
 connectDatabase();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("Home Page !");
+});
+
+app.use(cookieParser());
 app.use(helmet());
-
 app.use(morgan("tiny"));
-
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", require("./src/routes/router"));
-
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hi !!",
-  });
-});
-
-app.get("*", (req, res) => {
-  res.json({
-    message: "Hello !!",
-  });
-});
+app.use("/", todoRoute);
 
 app.listen(port, () => {
   console.log(`Server is listen on port ${port}`);

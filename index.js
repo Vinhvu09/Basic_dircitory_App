@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 app.use(cookieParser());
 app.use(helmet());
-app.use(morgan("tiny"));
+app.use(morgan("combined"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -8,6 +8,7 @@ dotenv.config();
 
 const connectDatabase = require("./src/configs/db.config");
 const todoRoute = require("./src/routes/todo.routes");
+const loginRoute = require("./src/routes/login.routes");
 connectDatabase();
 
 const port = process.env.PORT;
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", todoRoute);
+app.use("/", loginRoute);
 
 app.listen(port, () => {
   console.log(`Server is listen on port ${port}`);

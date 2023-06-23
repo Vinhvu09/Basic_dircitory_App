@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const ImageSchema = mongoose.Schema({
+const ImageSchema = new mongoose.Schema({
   name: {
     unique: true,
     type: String,

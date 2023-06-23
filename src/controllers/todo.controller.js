@@ -1,4 +1,3 @@
-const { default: mongoose } = require("mongoose");
 const Todo = require("../model/item");
 
 async function getAllitem(req, res) {

@@ -1,36 +1,49 @@
-const { default: mongoose, model } = require("mongoose");
 const multer = require("multer");
 const Image = require("../model/image");
+
+const uploadDirect = process.cwd() + "/uploads";
+
+// console.log(uploadDirect);
 
 async function uploadImage(req, res) {
   try {
     const newImage = new Image({
-      name: req.body.name,
+      name: req.file.originalname,
       image: {
-        date: req.file.filename,
+        data: req.file.filename,
         contentType: "image/png",
       },
     });
+
     await newImage.save();
-    res.json(newImage);
+
+    res.json({ newImage });
   } catch (error) {
     if (error.code === 11000) {
       res.send("Ko tai dc");
     }
+
+    res.json(error);
   }
 }
 
 //Storage
 const Storage = multer.diskStorage({
-  destination: "uploads",
+  destination: function (req, file, cb) {
+    console.log(file);
+    cb(null, "/uploads");
+  },
   filename: (req, file, cb) => {
+    // console.log(file);
     cb(null, file.originalname);
   },
 });
 
-const upload = multer({
-  storage: Storage,
-}).single("testImage");
+const config = multer({
+  dest: uploadDirect,
+});
+
+const upload = config.single("file");
 
 async function getAllImage(req, res) {
   const resultImage = await Image.find();

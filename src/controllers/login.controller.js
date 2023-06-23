@@ -1,4 +1,3 @@
-const { default: mongoose } = require("mongoose");
 const User = require("../model/user");
 
 async function creatUser(req, res) {

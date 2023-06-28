@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-main {
+body {
   background-color: rgb(255, 225, 221);
   height: 100vh;
   display: grid;

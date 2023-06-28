@@ -11,6 +11,7 @@ const connectDatabase = () => {
     .connect(mongoDbUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      dbName: "Test_dbName",
     })
     .then(() => {
       console.log("Successfully connected to the database");
